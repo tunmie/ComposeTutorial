@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.tutorial.SampleData
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
@@ -65,6 +68,8 @@ fun MessageCard(msg: Message) {
 
 }
 
+
+
 @Preview(name = "Light Mode")
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
@@ -74,8 +79,15 @@ fun MessageCard(msg: Message) {
 @Composable
 fun PreviewMessageCard() {
     ComposeTutorialTheme {
-        MessageCard(
-            msg = Message("Colleague", "Hey take a look at Jetpack Compose, it's great!")
-        )
+        Conversation(SampleData.conversationSample)
+    }
+}
+
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) {
+            message -> MessageCard(message)
+        }
     }
 }
